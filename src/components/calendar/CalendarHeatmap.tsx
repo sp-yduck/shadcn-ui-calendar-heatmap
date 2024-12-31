@@ -1,6 +1,12 @@
 import React from "react";
 import { RowProps, useDayPicker, Day, WeekNumber } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 const DAY_SIZE = "16px";
@@ -124,7 +130,7 @@ export default function CalendarHeatmap({
         modifiersClassNames={heatmapClassNames}
         components={{
           Head: () => <></>,
-          Row: (props) => <CustomRow rowProps={props} />,
+          Row: (props) => <CustomRow rowProps={props} data={data} />,
         }}
       />
       <div className="w-full justify-items-end pr-4">
@@ -136,11 +142,13 @@ export default function CalendarHeatmap({
 
 interface CustomRowProps {
   rowProps: RowProps;
+  data: CalendarHeatmapProps[];
 }
 
 function CustomRow(props: CustomRowProps): JSX.Element {
   const { styles, classNames, showWeekNumber, components } = useDayPicker();
   const rowProps = props.rowProps;
+  const data = props.data;
   const DayComponent = components?.Day ?? Day;
   const WeeknumberComponent = components?.WeekNumber ?? WeekNumber;
 
@@ -160,31 +168,45 @@ function CustomRow(props: CustomRowProps): JSX.Element {
   const monthOfData = new Date(rowProps.dates[6]).getMonth();
 
   return (
-    <tr
-      className={cn(
-        classNames.row,
-        thisMonth !== monthOfData &&
-          "last:-mr-[calc(var(--box-margin)+var(--box-size))]"
-      )}
-      style={
-        {
-          "--box-size": DAY_SIZE,
-          "--box-margin": DAY_MARGIN,
-          ...styles.row,
-        } as React.CSSProperties
-      }
-    >
-      {weekNumberCell}
-      {rowProps.dates.map((date) => (
-        <td
-          className={classNames.cell}
-          style={styles.cell}
-          key={date.toISOString()}
-          role="presentation"
-        >
-          <DayComponent displayMonth={rowProps.displayMonth} date={date} />
-        </td>
-      ))}
-    </tr>
+    <TooltipProvider delayDuration={100}>
+      <tr
+        className={cn(
+          classNames.row,
+          thisMonth !== monthOfData &&
+            "last:-mr-[calc(var(--box-margin)+var(--box-size))]"
+        )}
+        style={
+          {
+            "--box-size": DAY_SIZE,
+            "--box-margin": DAY_MARGIN,
+            ...styles.row,
+          } as React.CSSProperties
+        }
+      >
+        {weekNumberCell}
+        {rowProps.dates.map((date) => (
+          <Tooltip>
+            <TooltipContent>{`${
+              data.find(
+                (item) => item.date.toISOString() === date.toISOString()
+              )?.count || "No"
+            } activities on ${date.toDateString()}`}</TooltipContent>
+            <TooltipTrigger className="cursor-default">
+              <td
+                className={classNames.cell}
+                style={styles.cell}
+                key={date.toISOString()}
+                role="presentation"
+              >
+                <DayComponent
+                  displayMonth={rowProps.displayMonth}
+                  date={date}
+                />
+              </td>
+            </TooltipTrigger>
+          </Tooltip>
+        ))}
+      </tr>
+    </TooltipProvider>
   );
 }
