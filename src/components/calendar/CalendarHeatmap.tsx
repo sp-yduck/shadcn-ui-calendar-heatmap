@@ -46,7 +46,6 @@ export default function CalendarHeatmap({
       four: four,
     };
   };
-
   const heatmapClassNames = {
     zero: "bg-gray-100",
     one: "bg-red-200",
@@ -55,35 +54,83 @@ export default function CalendarHeatmap({
     four: "bg-red-800",
   };
 
+  const HeatmapLegend = () => {
+    return (
+      <div className="flex space-x-2 text-sm text-gray-600">
+        <span>less</span>
+        <div className="flex items-center space-x-1">
+          <div
+            className={cn(
+              "w-[var(--box-size)] h-[var(--box-size)] rounded-sm",
+              heatmapClassNames.zero
+            )}
+          ></div>
+          <div
+            className={cn(
+              "w-[var(--box-size)] h-[var(--box-size)] rounded-sm",
+              heatmapClassNames.one
+            )}
+          ></div>
+          <div
+            className={cn(
+              "w-[var(--box-size)] h-[var(--box-size)] rounded-sm",
+              heatmapClassNames.two
+            )}
+          ></div>
+          <div
+            className={cn(
+              "w-[var(--box-size)] h-[var(--box-size)] rounded-sm",
+              heatmapClassNames.three
+            )}
+          ></div>
+          <div
+            className={cn(
+              "w-[var(--box-size)] h-[var(--box-size)] rounded-sm",
+              heatmapClassNames.four
+            )}
+          ></div>
+        </div>
+        <span>more</span>
+      </div>
+    );
+  };
+
   return (
-    <Calendar
-      formatters={{ formatCaption }}
-      numberOfMonths={12}
-      classNames={{
-        nav: "hidden",
-        caption: "text-xs",
-        caption_label: "font-normal",
-        tbody: "flex",
-        month: "!ml-0",
-        row: "[user-select:none;] flex flex-col",
-        day: "w-[var(--box-size)] h-[var(--box-size)] m-[var(--box-margin)] bg-gray-100 border rounded-sm text-xs text-transparent",
-        day_outside:
-          "text-transparent bg-transparent border border-transparent",
-        day_today: "border border-black text-transparent",
-      }}
-      modifiers={heatmapModify()}
-      modifiersClassNames={heatmapClassNames}
-      components={{
-        Head: () => <></>,
-        Row: (props) => <CustomRow rowProps={props} />,
-      }}
+    <div
+      className="flex-cols w-full rounded-md border pb-3 overflow-x-scroll"
       style={
         {
           "--box-size": DAY_SIZE,
           "--box-margin": DAY_MARGIN,
         } as React.CSSProperties
       }
-    />
+    >
+      <Calendar
+        formatters={{ formatCaption }}
+        numberOfMonths={12}
+        classNames={{
+          nav: "hidden",
+          caption: "text-xs",
+          caption_label: "font-normal",
+          tbody: "flex",
+          month: "!ml-0",
+          row: "[user-select:none;] flex flex-col",
+          day: "w-[var(--box-size)] h-[var(--box-size)] m-[var(--box-margin)] bg-gray-100 border rounded-sm text-xs text-transparent",
+          day_outside:
+            "text-transparent bg-transparent border border-transparent",
+          day_today: "border border-black text-transparent",
+        }}
+        modifiers={heatmapModify()}
+        modifiersClassNames={heatmapClassNames}
+        components={{
+          Head: () => <></>,
+          Row: (props) => <CustomRow rowProps={props} />,
+        }}
+      />
+      <div className="w-full justify-items-end pr-4">
+        <HeatmapLegend />
+      </div>
+    </div>
   );
 }
 
