@@ -7,12 +7,18 @@ const DAY_SIZE = "16px";
 const DAY_MARGIN = "2px";
 
 export default function CalendarHeatmap() {
+  const formatCaption = (date: Date) => {
+    return date.toLocaleString("default", { month: "short" });
+  };
+
   return (
     <Calendar
+      formatters={{ formatCaption }}
       numberOfMonths={12}
       classNames={{
         nav: "hidden",
-        caption: "hidden",
+        caption: "text-xs",
+        caption_label: "font-normal",
         tbody: "flex",
         month: "!ml-0",
         row: "[user-select:none;] flex flex-col",
