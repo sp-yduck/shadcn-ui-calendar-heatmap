@@ -1,13 +1,15 @@
 {
   "name": "shadcn-ui-calendar-heatmap",
+  "homepage": "https://sp-yduck.github.io/shadcn-ui-calendar-heatmap/",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.1",
@@ -15,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "gh-pages": "^6.2.0",
     "lucide-react": "^0.469.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
