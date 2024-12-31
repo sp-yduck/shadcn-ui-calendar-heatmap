@@ -25,6 +25,9 @@ export default function CalendarHeatmap({
   const formatCaption = (date: Date) => {
     return date.toLocaleString("default", { month: "short" });
   };
+  const elevenMonthAgo = new Date(
+    new Date().setMonth(new Date().getMonth() - 11)
+  );
   const heatmapModify = () => {
     const zero: Date[] = [];
     const one: Date[] = [];
@@ -114,6 +117,7 @@ export default function CalendarHeatmap({
       <Calendar
         formatters={{ formatCaption }}
         numberOfMonths={12}
+        defaultMonth={elevenMonthAgo}
         className="justify-center items-center"
         classNames={{
           nav: "hidden",
