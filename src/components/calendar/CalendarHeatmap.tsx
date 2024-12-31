@@ -6,9 +6,53 @@ import { cn } from "@/lib/utils";
 const DAY_SIZE = "16px";
 const DAY_MARGIN = "2px";
 
-export default function CalendarHeatmap() {
+interface CalendarHeatmapProps {
+  date: Date;
+  count: number;
+}
+
+export default function CalendarHeatmap({
+  data,
+}: {
+  data: CalendarHeatmapProps[];
+}) {
   const formatCaption = (date: Date) => {
     return date.toLocaleString("default", { month: "short" });
+  };
+  const heatmapModify = () => {
+    const zero: Date[] = [];
+    const one: Date[] = [];
+    const two: Date[] = [];
+    const three: Date[] = [];
+    const four: Date[] = [];
+    for (const item of data) {
+      if (item.count === 0) {
+        zero.push(item.date);
+      } else if (item.count === 1) {
+        one.push(item.date);
+      } else if (item.count === 2) {
+        two.push(item.date);
+      } else if (item.count === 3) {
+        three.push(item.date);
+      } else if (item.count === 4) {
+        four.push(item.date);
+      }
+    }
+    return {
+      zero: zero,
+      one: one,
+      two: two,
+      three: three,
+      four: four,
+    };
+  };
+
+  const heatmapClassNames = {
+    zero: "bg-gray-100",
+    one: "bg-red-200",
+    two: "bg-red-400",
+    three: "bg-red-600",
+    four: "bg-red-800",
   };
 
   return (
@@ -27,6 +71,8 @@ export default function CalendarHeatmap() {
           "text-transparent bg-transparent border border-transparent",
         day_today: "border border-black text-transparent",
       }}
+      modifiers={heatmapModify()}
+      modifiersClassNames={heatmapClassNames}
       components={{
         Head: () => <></>,
         Row: (props) => <CustomRow rowProps={props} />,
