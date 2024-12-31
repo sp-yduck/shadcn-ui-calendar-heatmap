@@ -10,6 +10,9 @@ export default function CalendarHeatmap() {
         tbody: "flex",
         row: "[user-select:none;] flex flex-col",
       }}
+      components={{
+        Head: () => <></>,
+      }}
     />
   );
 }
