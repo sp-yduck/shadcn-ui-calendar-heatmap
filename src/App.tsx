@@ -19,7 +19,7 @@ function App() {
           inspired by github's commit calendar graph.
         </p>
       </div>
-      <div className="p-8">
+      <div className="flex p-8 justify-center">
         <CalendarHeatmap data={exampleData} />
       </div>
     </div>

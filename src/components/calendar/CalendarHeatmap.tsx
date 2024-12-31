@@ -103,7 +103,7 @@ export default function CalendarHeatmap({
 
   return (
     <div
-      className="flex-cols w-full rounded-md border pb-3 overflow-x-scroll"
+      className="flex-cols rounded-md border px-3 pb-3 overflow-x-scroll"
       style={
         {
           "--box-size": DAY_SIZE,
@@ -114,6 +114,7 @@ export default function CalendarHeatmap({
       <Calendar
         formatters={{ formatCaption }}
         numberOfMonths={12}
+        className="justify-center items-center"
         classNames={{
           nav: "hidden",
           caption: "text-xs",
