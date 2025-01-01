@@ -12,16 +12,18 @@ import { cn } from "@/lib/utils";
 const DAY_SIZE = "16px";
 const DAY_MARGIN = "2px";
 
-interface CalendarHeatmapProps {
+export interface CalendarHeatmapData {
   date: Date;
   count: number;
 }
 
+interface CalendarHeatmapProps {
+  data: CalendarHeatmapData[];
+}
+
 export default function CalendarHeatmap({
   data,
-}: {
-  data: CalendarHeatmapProps[];
-}) {
+}: CalendarHeatmapProps): JSX.Element {
   const formatCaption = (date: Date) => {
     return date.toLocaleString("default", { month: "short" });
   };
@@ -147,7 +149,7 @@ export default function CalendarHeatmap({
 
 interface CustomRowProps {
   rowProps: RowProps;
-  data: CalendarHeatmapProps[];
+  data: CalendarHeatmapData[];
 }
 
 function CustomRow(props: CustomRowProps): JSX.Element {

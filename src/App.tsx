@@ -1,14 +1,8 @@
 import CalendarHeatmap from "./components/calendar/CalendarHeatmap";
+import { generateRandomDatas } from "./lib/calendar";
 
 function App() {
-  const exampleData = [
-    { date: new Date("2024-12-1"), count: 1 },
-    { date: new Date("2024-12-2"), count: 2 },
-    { date: new Date("2024-12-3"), count: 3 },
-    { date: new Date("2024-12-4"), count: 4 },
-    { date: new Date("2024-12-5"), count: 0 },
-    { date: new Date("2024-12-6"), count: 1 },
-  ];
+  const exampleData = generateRandomDatas();
 
   return (
     <div className="w-screen items-center space-y-10">
